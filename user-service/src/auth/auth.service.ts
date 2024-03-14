@@ -17,12 +17,12 @@ export class AuthService {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return null;
     
-        const payload = { username: username, id: user.id, Role: user.Role };
+        const payload = { username: username, id: user.id, Role: user.Role, isActive: user.isActive };
         return this.jwtSerVice.sign(payload);
     }
     
     async signCookie(res: Response, token: string) {
-        const expirationDate = new Date(Date.now() + this.configService.get('JWT_COOKIE_EXPIRES_IN') * 1000);
+        const expirationDate = new Date(Date.now() + this.configService.get('JWT_EXPIRES_IN') * 1000);
         log(expirationDate);
         res.cookie('jwt', token, {
           expires: expirationDate,

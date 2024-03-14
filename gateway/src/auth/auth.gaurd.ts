@@ -1,15 +1,16 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, Inject } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 import { log } from 'console';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
-    // private readonly usersService: UsersService,
+    @Inject('USER_SERVICE') private userClient:ClientProxy
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -23,6 +24,13 @@ export class AuthGuard implements CanActivate {
           token
         );
         request['user'] = payload;
+        const check = await this.userClient.send({cmd:'findOne'},payload.id).toPromise();
+        if(!check){
+          throw new UnauthorizedException('Unable to find user');
+        }
+        if(!check.isActive){
+          throw new UnauthorizedException('User is not active');
+        }
       } catch {
         throw new UnauthorizedException();
       }

@@ -20,19 +20,20 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     TypeOrmModule.forRoot(typeOrmConfig), 
     TypeOrmModule.forFeature([User]), 
     AuthModule,
-    JwtModule.register({
-      secret: 'daf49sj3k6af94cka64jllsjf846kjc96',
-      signOptions: { expiresIn: '3600s' },
-    }),
+    // JwtModule.register({
+    //   secret: 'daf49sj3k6af94cka64jllsjf846kjc96',
+    //   signOptions: { expiresIn: '3600s' },
+    // }),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
   ],
-  controllers: [AppController, AuthController],
-  providers: [AppService, AuthService,
-    {
-      provide: APP_PIPE,
-      useClass: ValidationPipe,
-    }],
+  controllers: [AppController],
+  providers: [AppService,
+    // {
+    //   provide: APP_PIPE,
+    //   useClass: ValidationPipe,
+    // }
+  ],
 })
 export class AppModule {}

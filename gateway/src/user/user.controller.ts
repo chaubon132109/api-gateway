@@ -4,6 +4,9 @@ import { AuthGuard } from 'src/auth/auth.gaurd';
 import { Role } from 'src/auth/role.enum';
 import { RolesGuard } from 'src/auth/role.gaurd';
 import { Roles } from 'src/auth/roles.decorator';
+import { createUserDTO } from '../dto/createUser.dto';
+import { log } from 'console';
+import { updateUserDTO } from 'src/dto/updateUser.dto';
 @UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
@@ -19,11 +22,11 @@ export class UserController {
       return this.userClient.send({cmd:'findOne'},id);
     }
     @Post()
-    async create(@Body() user: any): Promise<any> {
-      return await this.userClient.send({cmd:'create'},user);
+    async create(@Body() createUserDTO: createUserDTO): Promise<any> {
+      return await this.userClient.send({cmd:'create'},createUserDTO);
     }
     @Put(':id')
-    async updateUser(@Param('id') id: number,@Body() user: any) : Promise<any> {
+    async updateUser(@Param('id') id: number,@Body() user: updateUserDTO) : Promise<any> {
         return await this.userClient.send({cmd:'update'},{user:user, id:id});
     }
     @Delete(':id')

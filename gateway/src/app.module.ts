@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
@@ -10,6 +10,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { FilesModule } from './files/files.module';
 import { FilesController } from './files/files.controller';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -46,6 +47,12 @@ import { FilesController } from './files/files.controller';
     FilesModule
   ],
   controllers: [AppController, AuthController, UserController,FilesController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    }
+  ],
 })
 export class AppModule {}

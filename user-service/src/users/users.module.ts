@@ -15,21 +15,10 @@
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn: '6000s',
+          expiresIn: configService.get('JWT_EXPIRES_IN'),
         },
       }),
     }),
-    // ClientsModule.register([
-    //   {
-    //     name : 'FILE_SERVICE',
-    //     transport : Transport.TCP,
-    //     options :
-    //       { 
-    //         port: 3001,
-    //         host: 'localhost'
-    //       }
-    //   }
-    // ])
     ],
     providers: [UsersService],
     controllers: [UsersController],

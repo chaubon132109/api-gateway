@@ -21,7 +21,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn: '6000s',
+          expiresIn: configService.get('JWT_EXPIRES_IN'),
         },
       }),
     }),

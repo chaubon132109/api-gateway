@@ -32,6 +32,11 @@ class CreateUserTable1710131022405 {
                   type: 'boolean',
                   default: true,
                 },
+                {
+                  name: 'Role',
+                  type: 'string',
+                  default: 'user',
+                },
               ],
             }),
             true,

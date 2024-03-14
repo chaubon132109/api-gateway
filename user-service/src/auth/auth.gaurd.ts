@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 import { log } from 'console';
 import { ConfigService } from '@nestjs/config';
-import { jwtConstants } from './constants';
+// import { jwtConstants } from './constants';
 import { Request } from 'express';
 
 @Injectable()

@@ -49,12 +49,15 @@ export class FileService {
     return files;
   }
   async findFile(name: string, format: string): Promise<File[]> {
-    const regex = new RegExp(`^.*\\.${format}$`, 'i');
-    log(regex);
-    const files = await this.fileModel.find({
-      name: new RegExp(name, 'i'),
-      path: regex,
-    });
+    let query: any = {
+      name: new RegExp(name, 'i')
+    };
+    if (format) {
+      const regex = new RegExp(`^.*\\.${format}$`, 'i');
+      query.path = regex;
+    }
+    const files = await this.fileModel.find(query);
     return files;
   }
+
 }

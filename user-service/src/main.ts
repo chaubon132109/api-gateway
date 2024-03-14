@@ -13,8 +13,6 @@ async function bootstrap() {
         host: '10.1.56.154'
     }
     });
-  // app.use(cookieParser());
-  app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen();
 }
 bootstrap();
