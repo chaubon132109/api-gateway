@@ -13,6 +13,9 @@ export class File {
 
   @Prop({ required: true })
   mimeType: string;
+  
+  @Prop({ required: true })
+  userid: number;
 }
 
 export const FileSchema = SchemaFactory.createForClass(File);

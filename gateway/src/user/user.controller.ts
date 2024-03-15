@@ -7,6 +7,8 @@ import { Roles } from 'src/auth/roles.decorator';
 import { createUserDTO } from '../dto/createUser.dto';
 import { log } from 'console';
 import { updateUserDTO } from 'src/dto/updateUser.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+@ApiTags('user')
 @UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
@@ -14,6 +16,18 @@ export class UserController {
         @Inject('USER_SERVICE') private readonly userClient : ClientProxy,
     ){}
     @Get()
+    @ApiOperation(
+        {
+            summary : 'Get all user',
+            description : 'Lấy tất cả người dùng',
+        }
+    )
+    @ApiResponse(
+        {
+            status : 200,
+            description : 'Lấy thành công',
+        }
+    )
     getAllUsers(@Query('sortBy') sortBy: string,@Query('sortOrder') sortOrder: string, @Query('limit') limit: number) {
         return this.userClient.send({cmd:'getAllUsers'},{sortBy:sortBy,sortOrder: sortOrder , limit : limit});
     }

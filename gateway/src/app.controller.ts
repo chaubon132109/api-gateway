@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ClientProxy } from '@nestjs/microservices';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller()
 export class AppController {
@@ -15,10 +16,12 @@ export class AppController {
     return this.appService.getHello();
   }
   @Get('ping/file')
+  @ApiTags('ping')
   getPingFile() {
     return this.fileClient.send({cmd : 'ping'},'test ping file-service');
   }
   @Get('ping/user')
+  @ApiTags('ping')
   getPingUser() {
     return this.userClient.send({cmd : 'ping'},'test ping user-service');
   }

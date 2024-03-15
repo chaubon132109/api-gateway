@@ -20,8 +20,9 @@ import { MessagePattern } from '@nestjs/microservices';
         return this.fileService.findAll();
     }
     @MessagePattern({cmd: 'uploadFile'})
-    uploadFile(file : any) {
-        return this.fileService.uploadFile(file);
+    uploadFile(data : any) {
+        const {file,userid} = data;
+        return this.fileService.uploadFile(file, userid);
     }
     @MessagePattern({cmd: 'searchFile'})
     async findFile(data : any)

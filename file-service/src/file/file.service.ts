@@ -9,24 +9,26 @@ import { log } from 'console';
 @Injectable()
 export class FileService {
   private readonly uploadFolder = './uploads';
-
+  private readonly buffefFolder = '../gateway/uploads'
   constructor(@InjectModel(File.name) private fileModel: Model<FileDocument>) {}
 
-  async uploadFile(file: Express.Multer.File): Promise<File> {
+  async uploadFile(file: Express.Multer.File, userid : number): Promise<File> {
     try {
-      
       const filePath = join(this.uploadFolder, file.filename);
-      // copyFileSync(file.path, filePath);
-
+      const buffe = join(this.buffefFolder, file.filename);
+      copyFileSync(buffe, filePath);
       const newFile = new this.fileModel({
         name: file.originalname,
         path: filePath,
         mimeType: file.mimetype,
+        userid: userid,
       });
       return newFile.save();
     } catch (error) {
       console.error(error);
       throw error;
+    } finally{
+      unlinkSync(join(this.buffefFolder, file.filename));
     }
   }
 

@@ -3,7 +3,6 @@ import { extname } from 'path';
 import { existsSync, mkdirSync } from 'fs';
 import { diskStorage } from 'multer';
 
-// Tạo thư mục uploads nếu chưa tồn tại
 const uploadFolder = './uploads';
 if (!existsSync(uploadFolder)) {
   mkdirSync(uploadFolder);
